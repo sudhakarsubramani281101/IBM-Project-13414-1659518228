@@ -1,0 +1,46 @@
+PYTHON PROGRAM FOR GPS
+import wiotp.sdk.device
+import time
+import random
+myConfig = {
+"identity": {
+"orgId": "dks66l",
+"typeId": "Sudha",
+"deviceId":"45"
+},
+"auth": {
+"token": "sudha2002@"
+}
+}
+def myCommandCallback (cmd):
+print ("Message received from IBM IoT Platform: %s" % cmd.data['command'])
+m=cmd.data['command']
+client = wiotp.sdk.device.DeviceClient(config=myConfig, logHandlers=None)
+client.connect()
+def pub (data):
+client.publishEvent(eventId="status", msgFormat="json", data=myData, qos=0, onPublish=None)
+print ("Published data Successfully: %s", myData)
+while True:
+myData={'name': 'Train1', 'lat':13.08363 , 'lon': 80.27080}
+pub (myData)
+time.sleep (2)
+myData={'name': 'Train2', 'lat': 12.40797, 'lon': 79.81410}
+pub (myData)
+time.sleep (2)
+myData={'name': 'Train1', 'lat': 11.83331, 'lon': 79.37465}
+pub(myData)
+time.sleep(6)
+myData={'name': 'Train1', 'lat': 11.59664, 'lon': 78.69899}
+pub (myData)
+time.sleep (6)
+myData={'name': 'Train1', 'lat': 11.63431, 'lon': 78.11122}
+pub (myData)
+time.sleep (6)
+myData={'name': 'Train1', 'lat': 11.32207, 'lon': 77.61684}
+pub (myData)
+time.sleep (6)
+myData={'name': 'Train1', 'lat': 11.03107, 'lon': 76.96864}
+pub (myData)
+time.sleep (6)
+client.commandCallback = myCommandCallback
+client.disconnect ()
